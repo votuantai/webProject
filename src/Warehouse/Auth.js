@@ -180,7 +180,7 @@ const actions = {
         let id = listEditStatus._id
         commit('listStatus_request')
         let res = await axios.post(`${HOST}api/poststatus/updateStatus/${id}`, listEditStatus)
-        let src = await axios.get('${HOST}api/poststatus/getCreateStatus')
+        let src = await axios.get(`${HOST}api/poststatus/getCreateStatus`)
         commit('listStatus_create', res.data.listStatus)
         commit('listStatus_create', src.data.listStatus)
         return src
