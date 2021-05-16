@@ -2,7 +2,7 @@ import axios from "axios"
 /* import router from "../../../server/routes/api/users" */
 import router from '../router/index'
 
-const HOST = 'https://web-project-nhom13.herokuapp.com';
+const HOST = 'https://web-app-13.herokuapp.com/';
 
 const state = {
     token: localStorage.getItem('token') || '',
