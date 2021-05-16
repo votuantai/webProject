@@ -2,6 +2,8 @@ import axios from "axios"
 /* import router from "../../../server/routes/api/users" */
 import router from '../router/index'
 
+const HOST = 'https://web-project-nhom13.herokuapp.com';
+
 const state = {
     token: localStorage.getItem('token') || '',
     userObj: localStorage.getItem('userObj') || '',
@@ -34,7 +36,7 @@ const actions = {
         commit
     }, userData) {
         commit('register_request')
-        let res = await axios.post('http://localhost:8081/api/users/register', userData)
+        let res = await axios.post(`${HOST}api/users/register`, userData)
         if (res.data.success !== undefined) {
             commit('register_success')
         }
@@ -46,7 +48,7 @@ const actions = {
         commit
     }, user) {
         commit('auth_success')
-        let res = await axios.post('http://localhost:8081/api/users/login', user)
+        let res = await axios.post(`${HOST}api/users/login`, user)
         if (res.data.success) {
             const userObj = JSON.stringify(res.data)
 
@@ -61,7 +63,7 @@ const actions = {
         commit
     }, googleUser) {
         commit('auth_loginGoogle')
-        let res = await axios.post('http://localhost:8081/api/users/loginGoogle', googleUser)
+        let res = await axios.post(`${HOST}api/users/loginGoogle`, googleUser)
         if (res.data.success) {
             const userObj = JSON.stringify(res.data)
 
@@ -88,7 +90,7 @@ const actions = {
         commit
     }, notify) {
         commit('notices_request')
-        let res = await axios.post('http://localhost:8081/api/notification/postCreateNotices', notify)
+        let res = await axios.post(`${HOST}api/notification/postCreateNotices`, notify)
         if (res.data.success !== undefined) {
             commit('notices_success')
         }
@@ -99,7 +101,7 @@ const actions = {
         commit
     }) {
         commit('notices_request')
-        let res = await axios.get('http://localhost:8081/api/notification/getCreateNotices')
+        let res = await axios.get(`${HOST}api/notification/getCreateNotices`)
         commit('notices_create', res.data.Notices)
         return res
     },
@@ -108,7 +110,7 @@ const actions = {
         commit
     }, id) {
         commit('notices_request')
-        let res = await axios.delete(`http://localhost:8081/api/notification/deleteNotices/${id}`)
+        let res = await axios.delete(`${HOST}api/notification/deleteNotices/${id}`)
         commit('notices_remove', id)
         return res
     },
@@ -118,7 +120,7 @@ const actions = {
     }) {
         commit('notices_request')
         let id = window.location.pathname.split('/')[3]
-        let res = await axios.get(`http://localhost:8081/api/notification/editNotices/${id}`)
+        let res = await axios.get(`${HOST}api/notification/editNotices/${id}`)
         commit('notices_create', res.data.Notices)
         return res
     },
@@ -128,7 +130,7 @@ const actions = {
     }, Notices) {
         commit('notices_request')
         let id = window.location.pathname.split('/')[3]
-        let res = await axios.post(`http://localhost:8081/api/notification/updateNotices/${id}`, Notices)
+        let res = await axios.post(`${HOST}api/notification/updateNotices/${id}`, Notices)
         commit('notices_create', res.data.Notices)
         return res
     },
@@ -137,7 +139,7 @@ const actions = {
         commit
     }, createPost) {
         commit('listStatus_request')
-        let res = await axios.post('http://localhost:8081/api/poststatus/createStatus', createPost)
+        let res = await axios.post(`${HOST}api/poststatus/createStatus`, createPost)
         if (res.data.success !== undefined) {
             commit('listStatus_success')
             commit('listStatus_render', res.data.listStatus)
@@ -149,7 +151,7 @@ const actions = {
         commit
     }) {
         commit('listStatus_request')
-        let res = await axios.get('http://localhost:8081/api/poststatus/getCreateStatus')
+        let res = await axios.get(`${HOST}api/poststatus/getCreateStatus`)
         commit('listStatus_create', res.data.listStatus)
         return res
     },
@@ -158,7 +160,7 @@ const actions = {
         commit
     }, id) {
         commit('listStatus_request')
-        let res = await axios.delete(`http://localhost:8081/api/poststatus/deleteStatus/${id}`)
+        let res = await axios.delete(`${HOST}api/poststatus/deleteStatus/${id}`)
         commit('listStatus_remove', id)
         return res
     },
@@ -167,7 +169,7 @@ const actions = {
         commit
     }, id) {
         commit('listStatus_request')
-        let res = await axios.get(`http://localhost:8081/api/poststatus/editStatus/${id}`)
+        let res = await axios.get(`${HOST}api/poststatus/editStatus/${id}`)
         commit('listEditStatus_create', res.data.listEditStatus)
         return res
     },
@@ -177,8 +179,8 @@ const actions = {
     }, listEditStatus) {
         let id = listEditStatus._id
         commit('listStatus_request')
-        let res = await axios.post(`http://localhost:8081/api/poststatus/updateStatus/${id}`, listEditStatus)
-        let src = await axios.get('http://localhost:8081/api/poststatus/getCreateStatus')
+        let res = await axios.post(`${HOST}api/poststatus/updateStatus/${id}`, listEditStatus)
+        let src = await axios.get('${HOST}api/poststatus/getCreateStatus')
         commit('listStatus_create', res.data.listStatus)
         commit('listStatus_create', src.data.listStatus)
         return src
